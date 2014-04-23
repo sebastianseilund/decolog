@@ -1,6 +1,6 @@
 {
   "name": "billy-log-parser",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "bin": {
     "billy-log-parser": "./bin/billy-log-parser"
