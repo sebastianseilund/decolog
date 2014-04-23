@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+var pjson = require('../package'),
+    program = require('commander'),
+    processStream = require('../lib/process-stream');
+
+function list(val) {
+    return val.split(',');
+}
+
+program
+    .version(pjson.version)
+    .option('-e, --events <events>', 'Only include these events', list)
+    .option('-E, --not-events <not-events>', 'Do not include these events', list)
+    .option('-s, --services <services>', 'Only include these events', list)
+    .option('-S, --not-services <not-services>', 'Do not include these events', list)
+    .option('-m, --minimal', 'Only output one line per record, skipping extra fields');
+
+program.on('--help', function(){
+  console.log('  Examples:');
+  console.log('');
+  console.log('    $ tail -f temp/log | billy-log-parser');
+  console.log('    $ cat temp/log | billy-log-parser -e request,response');
+  console.log('');
+});
+
+program.parse(process.argv);
+
+console.log(program);
+
+processStream(process.stdin, process.stdout, program);
