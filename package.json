@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^0.6.2",
-    "minimist": "0.0.8",
     "moment": "^2.6.0",
     "commander": "^2.2.0"
   }
