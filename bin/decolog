@@ -17,8 +17,6 @@ program
     .option('-s, --services <services>', 'Only include these events', list)
     .option('-S, --not-services <not-services>', 'Do not include these events', list)
     .option('-m, --minimal', 'Only output one line per record, skipping extra fields')
-    .command('* <file>')
-    .action(main)
 
 program.on('--help', function(){
     console.log('  If a file is specified, the file will be watched and all previous and future contents of the file will be decorated and outputted.')
@@ -34,22 +32,21 @@ program.on('--help', function(){
 
 program.parse(process.argv)
 
-function main(file) {
-    var decorator = new LogDecorator({
-        events: this.events,
-        notEvents: this.notEvents,
-        services: this.services,
-        notServices: this.notServices,
-        minimal: this.minimal
-    })
+var file = program.args[0]
 
-    var streamIn
-    if (file) {
-        streamIn = new FollowStream(path.join(process.cwd(), file))
-    } else {
-        streamIn = process.stdin
-    }
+var decorator = new LogDecorator({
+    events: this.events,
+    notEvents: this.notEvents,
+    services: this.services,
+    notServices: this.notServices,
+    minimal: this.minimal
+})
 
-    streamIn.pipe(decorator).pipe(process.stdout)
-    // streamIn.pipe(process.stdout)
+var streamIn
+if (file) {
+    streamIn = new FollowStream(path.join(process.cwd(), file))
+} else {
+    streamIn = process.stdin
 }
+
+streamIn.pipe(decorator).pipe(process.stdout)
