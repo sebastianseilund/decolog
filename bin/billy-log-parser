@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-var pjson = require('../package'),
-    program = require('commander'),
-    processStream = require('../lib/process-stream');
+var path = require('path')
+var program = require('commander')
+var pjson = require('../package')
+var FollowStream = require('../lib/follow-stream')
+var LogDecorator = require('../lib/log-decorator')
 
 function list(val) {
-    return val.split(',');
+    return val.split(',')
 }
 
 program
@@ -14,16 +16,36 @@ program
     .option('-E, --not-events <not-events>', 'Do not include these events', list)
     .option('-s, --services <services>', 'Only include these events', list)
     .option('-S, --not-services <not-services>', 'Do not include these events', list)
-    .option('-m, --minimal', 'Only output one line per record, skipping extra fields');
+    .option('-m, --minimal', 'Only output one line per record, skipping extra fields')
+    .command('* <file>')
+    .action(main)
 
 program.on('--help', function(){
-  console.log('  Examples:');
-  console.log('');
-  console.log('    $ tail -f temp/log | billy-log-parser');
-  console.log('    $ cat temp/log | billy-log-parser -e request,response');
-  console.log('');
-});
+  console.log('  Examples:')
+  console.log('')
+  console.log('    $ tail -f temp/log | billy-log-parser')
+  console.log('    $ cat temp/log | billy-log-parser -e request,response')
+  console.log('')
+})
 
-program.parse(process.argv);
+program.parse(process.argv)
 
-processStream(process.stdin, process.stdout, program);
+function main(file) {
+    var decorator = new LogDecorator({
+        events: this.events,
+        notEvents: this.notEvents,
+        services: this.services,
+        notServices: this.notServices,
+        minimal: this.minimal
+    })
+
+    var streamIn
+    if (file) {
+        streamIn = new FollowStream(path.join(process.cwd(), file))
+    } else {
+        streamIn = process.stdin
+    }
+
+    streamIn.pipe(decorator).pipe(process.stdout)
+    // streamIn.pipe(process.stdout)
+}
