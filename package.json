@@ -1,15 +1,13 @@
 {
-  "name": "billy-log-parser",
+  "name": "decolog",
   "version": "0.1.0",
   "description": "",
+  "main": "index.js",
   "bin": {
-    "billy-log-parser": "./bin/billy-log-parser"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "decolog": "./bin/decolog"
   },
   "author": "",
-  "license": "MIT",
+  "license": "proprietary",
   "dependencies": {
     "colors": "^0.6.2",
     "moment": "^2.6.0",

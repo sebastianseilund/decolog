@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+var path = require('path')
+var program = require('commander')
+var pjson = require('../package')
+var FollowStream = require('../lib/follow-stream')
+var LogDecorator = require('../lib/log-decorator')
+
+function list(val) {
+    return val.split(',')
+}
+
+program
+    .version(pjson.version)
+    .option('-e, --events <events>', 'Only include these events', list)
+    .option('-E, --not-events <not-events>', 'Do not include these events', list)
+    .option('-s, --services <services>', 'Only include these events', list)
+    .option('-S, --not-services <not-services>', 'Do not include these events', list)
+    .option('-m, --minimal', 'Only output one line per record, skipping extra fields')
+
+program.on('--help', function(){
+    console.log('  If a file is specified, the file will be watched and all previous and future contents of the file will be decorated and outputted.')
+    console.log('  If no file is specified stdin will be decorated and outputted.')
+    console.log('')
+    console.log('  Examples:')
+    console.log('')
+    console.log('    $ decorate-log temp/log')
+    console.log('    $ tail -f temp/log | decorate-log')
+    console.log('    $ cat temp/log | decorate-log -e request,response')
+    console.log('')
+})
+
+program.parse(process.argv)
+
+var file = program.args[0]
+
+var decorator = new LogDecorator({
+    events: this.events,
+    notEvents: this.notEvents,
+    services: this.services,
+    notServices: this.notServices,
+    minimal: this.minimal
+})
+
+var streamIn
+if (file) {
+    streamIn = new FollowStream(path.join(process.cwd(), file))
+} else {
+    streamIn = process.stdin
+}
+
+streamIn.pipe(decorator).pipe(process.stdout)

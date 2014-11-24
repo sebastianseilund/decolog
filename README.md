@@ -1,20 +1,22 @@
-#billy-log-parser
+# decolog
 
 A cli tool that you can pipe JSON log files into and get pretty output.
 
-##Installation
+## Installation
+
+Only available on the Billy's Billing private npm registry
 
 ```sh
-npm install -g billy-log-parser
+npm install -g decolog
 ```
 
 
-##Usage
+## Usage
 
 ```sh
 $ billy-log-parser --help
 
-  Usage: billy-log-parser [options]
+  Usage: decolog [options]
 
   Options:
 
@@ -26,21 +28,23 @@ $ billy-log-parser --help
     -S, --not-services <not-services>  Do not include these events
     -m, --minimal                      Only output one line per record, skipping extra fields
 
+  If a file is specified, the file will be watched and all previous and future contents of the file will be decorated and outputted.
+  If no file is specified stdin will be decorated and outputted.
+
   Examples:
 
-    $ tail -f temp/log | billy-log-parser
-    $ cat temp/log | billy-log-parser -e request,response
+    $ decorate-log temp/log
+    $ tail -f temp/log | decorate-log
+    $ cat temp/log | decorate-log -e request,response
 ```
 
 
-##Expected log file format
+## Expected log file format
 
 The log file should consist of lines with JSON objects. Each line should have
 (not restricted to) the following keys:
 
 - `@timestamp`
-- `service`
-- `hostname`
 - `event`
 - `message`
 - `groupId`
