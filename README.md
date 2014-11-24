@@ -7,7 +7,7 @@ A cli tool that you can pipe JSON log files into and get pretty output.
 Only available on the Billy's Billing private npm registry
 
 ```sh
-npm install -g decolog
+npm install -g --registry https://billysbilling.registry.nodejitsu.com/ decolog
 ```
 
 
