@@ -16,7 +16,7 @@ npm install -g decolog
 ```sh
 $ billy-log-parser --help
 
-  Usage: billy-log-parser [options]
+  Usage: decolog [options]
 
   Options:
 
@@ -28,10 +28,14 @@ $ billy-log-parser --help
     -S, --not-services <not-services>  Do not include these events
     -m, --minimal                      Only output one line per record, skipping extra fields
 
+  If a file is specified, the file will be watched and all previous and future contents of the file will be decorated and outputted.
+  If no file is specified stdin will be decorated and outputted.
+
   Examples:
 
-    $ tail -f temp/log | billy-log-parser
-    $ cat temp/log | billy-log-parser -e request,response
+    $ decorate-log temp/log
+    $ tail -f temp/log | decorate-log
+    $ cat temp/log | decorate-log -e request,response
 ```
 
 
