@@ -1,15 +1,17 @@
-#billy-log-parser
+# decolog
 
 A cli tool that you can pipe JSON log files into and get pretty output.
 
-##Installation
+## Installation
+
+Only available on the Billy's Billing private npm registry
 
 ```sh
-npm install -g billy-log-parser
+npm install -g decolog
 ```
 
 
-##Usage
+## Usage
 
 ```sh
 $ billy-log-parser --help
@@ -33,14 +35,12 @@ $ billy-log-parser --help
 ```
 
 
-##Expected log file format
+## Expected log file format
 
 The log file should consist of lines with JSON objects. Each line should have
 (not restricted to) the following keys:
 
 - `@timestamp`
-- `service`
-- `hostname`
 - `event`
 - `message`
 - `groupId`
