@@ -7,7 +7,7 @@
     "decolog": "./bin/decolog"
   },
   "author": "",
-  "license": "proprietary",
+  "license": "MIT",
   "dependencies": {
     "colors": "^0.6.2",
     "moment": "^2.6.0",
@@ -15,6 +15,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/billysbilling/decolog.git"
+    "url": "https://github.com/sebastianseilund/decolog.git"
   }
 }

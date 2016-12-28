@@ -4,17 +4,15 @@ A cli tool that you can pipe JSON log files into and get pretty output.
 
 ## Installation
 
-Only available on the Billy's Billing private npm registry
-
 ```sh
-npm install -g --registry https://billysbilling.registry.nodejitsu.com/ decolog
+npm install -g decolog
 ```
 
 
 ## Usage
 
 ```sh
-$ billy-log-parser --help
+$ decolog --help
 
   Usage: decolog [options]
 
